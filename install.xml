@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 <id>dougiefresh:TabbedAdminMenu</id>
 <name>Real Tabs for Admin & Moderator Menus</name>
-<version>2.0</version>
+<version>2.1</version>
 
 <file name="$sourcedir/Admin.php">
 	<operation>
@@ -19,8 +19,8 @@
 		<add><![CDATA[
 	
 	// BEGIN MOD Real Tabs for Admin/Moderator
-	require_once($sourcedir . '/Subs-RealTabs.php');
-	RT_Reorganize($admin_areas);]]></add>
+	require_once($sourcedir . '/Subs-ReorganizeAdmin.php');
+	RA_Reorganize($admin_areas);]]></add>
 	</operation>
 </file>
 <file name="$sourcedir/ModerationCenter.php">
@@ -32,14 +32,6 @@
 	<operation>
 		<search position="replace"><![CDATA[loadTemplate(false, 'admin');]]></search>
 		<add><![CDATA[loadTemplate(false, array('admin', 'realtabs'));]]></add>
-	</operation>
-</file>
-<file name="$languagedir/Admin.english.php">
-	<operation>
-		<search position="before"><![CDATA[$txt['admin_boards'] = 'Boards';]]></search>
-		<add><![CDATA[
-$txt['admin_mods'] = 'Mods';
-$txt['admin_security'] = 'Security';]]></add>
 	</operation>
 </file>
 </modification>

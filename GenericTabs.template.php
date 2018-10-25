@@ -185,7 +185,7 @@ function template_generic_menu_sidebar_above()
 				', $tab_context['title'];
 		}
 		echo '</h3></div>
-			<p class="windowbg description">', isset($selected_tab['description']) ? $selected_tab['description'] : $tab_context['description'], '</p>';
+			<p class="windowbg description">', isset($selected_tab['description']) ? $selected_tab['description'] : (isset($tab_context['description']) ? $tab_context['description'] : ''), '</p>';
 	}
 }
 
