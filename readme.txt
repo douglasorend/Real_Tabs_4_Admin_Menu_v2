@@ -24,6 +24,9 @@ This mod was tested on SMF 2.0.8, but should work on earlier versions of SMF 2.0
 The reorganization of the Admin menu takes place AFTER the processing of the hooks....
 
 [color=blue][b][size=12pt][u]Changelog[/u][/size][/b][/color]
+[b][u]v2.2 - November 4th, 2014[/u][/b]
+o Made changes so that [b]Anti-Spam[/b] section created by [url=http://custom.simplemachines.org/mods/index.php?mod=3907]SMF 2.1-style Admin Area[/url] shows up under [b]Security[/b].
+
 [b][u]v2.1 - July 28th, 2014[/u][/b]
 o Fixed an undefined array index error in [b]GenericTabs.template.php[/b]
 

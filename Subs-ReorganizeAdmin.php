@@ -11,11 +11,21 @@ function RA_Reorganize(&$areas)
 {
 	global $txt;
 
-	// Create a "Security" section before the "Forum" section and include "Security and Moderation" settings here:
 	$new = array();
 	foreach ($areas as $needle => $section)
 	{
 		if ($needle == 'layout')
+		{
+			// Create "Modifications" section using "Modifications Settings" area:
+			$new['mods'] = array(
+				'title' => $txt['admin_mods'],
+				'permission' => array('admin_forum'),
+				'areas' => array(
+					'modsettings' => $areas['config']['areas']['modsettings'],
+				),
+			);
+
+			// Create a "Security" section before the "Forum" section and include "Security and Moderation" settings here:
 			$new['security'] = array(
 				'title' => $txt['admin_security'],
 				'permission' => array('admin_forum'),
@@ -23,11 +33,20 @@ function RA_Reorganize(&$areas)
 					'securitysettings' => $areas['config']['areas']['securitysettings'],
 				),
 			);
+		}
 		$new[$needle] = $section;
 	}
 	$areas = $new;
 	unset($new);
 	unset($areas['config']['areas']['securitysettings']);
+	unset($areas['config']['areas']['modsettings']);
+	
+	if (!empty($areas['config']['areas']['antispam']))
+	{
+		$areas['security']['areas']['antispam'] = $areas['config']['areas']['antispam'];
+		unset($areas['config']['areas']['antispam']);
+	}
+		
 
 	// Move the "httpBL", "Bad Behavior" and "Forum FireWall" settings to this section:
 	if (isset($areas['config']['areas']['forumfirewall']))
@@ -42,18 +61,8 @@ function RA_Reorganize(&$areas)
 		$areas['security']['areas']['httpBL'] = $areas['members']['areas']['httpBL'];
 	unset($areas['members']['areas']['httpBL']);
 
-	// Create "Modifications" section using "Modifications Settings" area:
-	$areas['mods'] = array(
-		'title' => $txt['admin_mods'],
-		'permission' => array('admin_forum'),
-		'areas' => array(
-			'modsettings' => $areas['config']['areas']['modsettings'],
-		),
-	);
-	unset($areas['config']['areas']['modsettings']);
-
 	// Remove most modifications from "Configuration" section and put under "Modifications":
-	$haystack = array('corefeatures', 'featuresettings', 'languages', 'serversettings', 'modsettings', 'current_theme', 'theme');
+	$haystack = array('antispam', 'corefeatures', 'featuresettings', 'languages', 'serversettings', 'modsettings', 'current_theme', 'theme');
 	foreach ($areas['config']['areas'] as $needle => $area)
 	{
 		if (!in_array($needle, $haystack))
