@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>dougiefresh:TabbedAdminMenu</id>
+<name>Real Tabs for Admin & Moderator Menus</name>
+<version>2.0</version>
+
+<file name="$sourcedir/Admin.php">
+	<operation>
+		<search position="replace"><![CDATA[$admin_include_data = createMenu($admin_areas);]]></search>
+		<add><![CDATA[$admin_include_data = createMenu($admin_areas, array('template_name' => 'GenericTabs'));]]></add>
+	</operation>
+	<operation>
+		<search position="replace"><![CDATA[loadTemplate('Admin', 'admin');]]></search>
+		<add><![CDATA[loadTemplate('Admin', array('admin', 'realtabs'));]]></add>
+	</operation>
+	<operation>
+		<search position="before"><![CDATA[call_integration_hook('integrate_admin_areas', array(&$admin_areas));]]></search>
+		<add><![CDATA[
+	
+	// BEGIN MOD Real Tabs for Admin/Moderator
+	require_once($sourcedir . '/Subs-RealTabs.php');
+	RT_Reorganize($admin_areas);]]></add>
+	</operation>
+</file>
+<file name="$sourcedir/ModerationCenter.php">
+	<operation>
+		<search position="before"><![CDATA['disable_url_session_check' => true,]]></search>
+		<add><![CDATA[
+		'template_name' => 'GenericTabs',]]></add>
+	</operation>
+	<operation>
+		<search position="replace"><![CDATA[loadTemplate(false, 'admin');]]></search>
+		<add><![CDATA[loadTemplate(false, array('admin', 'realtabs'));]]></add>
+	</operation>
+</file>
+<file name="$languagedir/Admin.english.php">
+	<operation>
+		<search position="before"><![CDATA[$txt['admin_boards'] = 'Boards';]]></search>
+		<add><![CDATA[
+$txt['admin_mods'] = 'Mods';
+$txt['admin_security'] = 'Security';]]></add>
+	</operation>
+</file>
+</modification>
